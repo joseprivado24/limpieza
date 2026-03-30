@@ -1,0 +1,985 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="es"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;title&gt;LimpiezaPro&lt;/title&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- ⚙️ CONFIGURACIÓN --&gt;</p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const SUPABASE_URL = 'https://nnbwwwxzbmtwcihaiyqn.supabase.co';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const SUPABASE_KEY = 'sb_publishable_-afd13akq0d3-eIWKNYoag_s6k3CkTU';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const ADMIN_PIN<span class="Apple-converted-space">    </span>= '1414';</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"&gt;&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">:root{</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--primary:#2563eb;--pl:#dbeafe;--pd:#1d4ed8;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--success:#16a34a;--sl:#dcfce7;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--warning:#d97706;--wl:#fef3c7;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--danger:#dc2626;--dl:#fee2e2;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--orange:#ea580c;--ol:#fff7ed;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--g400:#9ca3af;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g800:#1f2937;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>--r:10px;--sh:0 1px 3px rgba(0,0,0,.1);--sh2:0 8px 24px rgba(0,0,0,.12);</p>
+<p class="p1">}</p>
+<p class="p1">*{box-sizing:border-box;margin:0;padding:0;}</p>
+<p class="p1">body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--g100);color:var(--g800);min-height:100vh;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* TOPBAR */</p>
+<p class="p1">.topbar{background:var(--primary);color:#fff;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}</p>
+<p class="p1">.topbar-logo{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;}</p>
+<p class="p1">.avatar{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;}</p>
+<p class="p1">.logout-btn{background:rgba(255,255,255,.15);border:none;color:#fff;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px;}</p>
+<p class="p1">.logout-btn:hover{background:rgba(255,255,255,.28);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* LOGIN */</p>
+<p class="p1">#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1d4ed8,#2563eb 60%,#3b82f6);}</p>
+<p class="p1">.login-box{background:#fff;border-radius:16px;padding:40px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.25);}</p>
+<p class="p1">.login-logo{text-align:center;font-size:40px;margin-bottom:8px;}</p>
+<p class="p1">.login-title{text-align:center;font-size:22px;font-weight:700;margin-bottom:4px;}</p>
+<p class="p1">.login-sub{text-align:center;font-size:14px;color:var(--g500);margin-bottom:28px;}</p>
+<p class="p1">.login-tabs{display:flex;background:var(--g100);border-radius:8px;padding:4px;margin-bottom:20px;gap:4px;}</p>
+<p class="p1">.login-tab{flex:1;padding:8px;text-align:center;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);}</p>
+<p class="p1">.login-tab.active{background:#fff;color:var(--primary);box-shadow:var(--sh);}</p>
+<p class="p1">.worker-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}</p>
+<p class="p1">.worker-btn{padding:12px 8px;border:2px solid var(--g200);border-radius:8px;cursor:pointer;text-align:center;font-size:13px;font-weight:500;background:#fff;transition:all .15s;}</p>
+<p class="p1">.worker-btn:hover,.worker-btn.selected{border-color:var(--primary);background:var(--pl);color:var(--primary);}</p>
+<p class="p1">.w-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:15px;margin:0 auto 6px;}</p>
+<p class="p1">.pin-display{display:flex;gap:10px;justify-content:center;margin:16px 0;}</p>
+<p class="p1">.pin-dot{width:14px;height:14px;border-radius:50%;background:var(--g200);transition:background .15s;}</p>
+<p class="p1">.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:240px;margin:0 auto;}</p>
+<p class="p1">.pin-key{padding:14px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;font-size:18px;font-weight:600;cursor:pointer;text-align:center;transition:all .15s;}</p>
+<p class="p1">.pin-key:hover{background:var(--pl);border-color:var(--primary);}</p>
+<p class="p1">.pin-key.del{font-size:14px;color:var(--danger);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* LAYOUT */</p>
+<p class="p1">.app{display:flex;min-height:calc(100vh - 56px);}</p>
+<p class="p1">.sidebar{width:220px;background:#fff;border-right:1px solid var(--g200);padding:16px 0;flex-shrink:0;}</p>
+<p class="p1">.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;font-size:14px;color:var(--g600);transition:all .15s;}</p>
+<p class="p1">.nav-item:hover{background:var(--g50);}</p>
+<p class="p1">.nav-item.active{background:var(--pl);color:var(--primary);font-weight:600;border-right:3px solid var(--primary);}</p>
+<p class="p1">.nav-icon{font-size:18px;width:20px;text-align:center;}</p>
+<p class="p1">.nav-badge{margin-left:auto;background:var(--danger);color:#fff;border-radius:10px;padding:1px 7px;font-size:11px;font-weight:600;}</p>
+<p class="p1">.main{flex:1;padding:24px;overflow-y:auto;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* COMPONENTS */</p>
+<p class="p1">.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:20px;}</p>
+<p class="p1">.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}</p>
+<p class="p1">.card-title{font-size:16px;font-weight:600;}</p>
+<p class="p1">.section-title{font-size:20px;font-weight:700;margin-bottom:20px;}</p>
+<p class="p1">.page{display:none;}.page.active{display:block;}</p>
+<p class="p1">.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}</p>
+<p class="p1">.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}</p>
+<p class="p1">.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* BUTTONS */</p>
+<p class="p1">.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;border:none;transition:all .15s;white-space:nowrap;}</p>
+<p class="p1">.btn-primary{background:var(--primary);color:#fff;}.btn-primary:hover{background:var(--pd);}</p>
+<p class="p1">.btn-secondary{background:var(--g100);color:var(--g700);border:1px solid var(--g200);}.btn-secondary:hover{background:var(--g200);}</p>
+<p class="p1">.btn-success{background:var(--success);color:#fff;}.btn-success:hover{background:#15803d;}</p>
+<p class="p1">.btn-danger{background:var(--danger);color:#fff;}</p>
+<p class="p1">.btn-orange{background:var(--orange);color:#fff;}.btn-orange:hover{background:#c2410c;}</p>
+<p class="p1">.btn-lg{padding:14px 28px;font-size:16px;border-radius:12px;}</p>
+<p class="p1">.btn-sm{padding:5px 10px;font-size:12px;}.btn:disabled{opacity:.5;cursor:not-allowed;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* STATS */</p>
+<p class="p1">.stat-card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:16px 20px;}</p>
+<p class="p1">.stat-label{font-size:12px;color:var(--g500);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;}</p>
+<p class="p1">.stat-value{font-size:28px;font-weight:700;}</p>
+<p class="p1">.stat-sub{font-size:12px;color:var(--g500);margin-top:4px;}</p>
+<p class="p1">.stat-blue{border-left:4px solid var(--primary);}.stat-green{border-left:4px solid var(--success);}</p>
+<p class="p1">.stat-yellow{border-left:4px solid var(--warning);}.stat-red{border-left:4px solid var(--danger);}</p>
+<p class="p1">.stat-orange{border-left:4px solid var(--orange);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* BADGES */</p>
+<p class="p1">.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500;}</p>
+<p class="p1">.badge-blue{background:var(--pl);color:var(--primary);}</p>
+<p class="p1">.badge-green{background:var(--sl);color:var(--success);}</p>
+<p class="p1">.badge-yellow{background:var(--wl);color:var(--warning);}</p>
+<p class="p1">.badge-red{background:var(--dl);color:var(--danger);}</p>
+<p class="p1">.badge-orange{background:var(--ol);color:var(--orange);}</p>
+<p class="p1">.badge-gray{background:var(--g100);color:var(--g600);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* WORKER CARDS */</p>
+<p class="p1">.worker-card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:18px;display:flex;flex-direction:column;gap:12px;}</p>
+<p class="p1">.worker-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#fff;flex-shrink:0;}</p>
+<p class="p1">.worker-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 0;border-top:1px solid var(--g100);border-bottom:1px solid var(--g100);}</p>
+<p class="p1">.wstat{text-align:center;}.wstat-v{font-size:18px;font-weight:700;}.wstat-l{font-size:11px;color:var(--g500);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* CHECKLIST */</p>
+<p class="p1">.cl-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid var(--g200);margin-bottom:8px;transition:all .15s;}</p>
+<p class="p1">.cl-item.done{background:var(--sl);border-color:var(--success);}</p>
+<p class="p1">.checkbox{width:22px;height:22px;border-radius:5px;border:2px solid var(--g300);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s;}</p>
+<p class="p1">.checkbox.checked{background:var(--success);border-color:var(--success);color:#fff;font-size:13px;}</p>
+<p class="p1">.done-text{text-decoration:line-through;color:var(--g400);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* MODAL */</p>
+<p class="p1">.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}</p>
+<p class="p1">.modal{background:#fff;border-radius:14px;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.25);}</p>
+<p class="p1">.modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1;}</p>
+<p class="p1">.modal-title{font-size:17px;font-weight:600;}</p>
+<p class="p1">.modal-body{padding:20px 24px;}</p>
+<p class="p1">.modal-footer{padding:16px 24px;border-top:1px solid var(--g200);display:flex;gap:8px;justify-content:flex-end;position:sticky;bottom:0;background:#fff;}</p>
+<p class="p1">.close-btn{font-size:22px;cursor:pointer;color:var(--g400);padding:2px 6px;border-radius:4px;}.close-btn:hover{background:var(--g100);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* FORM */</p>
+<p class="p1">.form-group{margin-bottom:16px;}</p>
+<p class="p1">.form-label{display:block;font-size:13px;font-weight:500;color:var(--g700);margin-bottom:6px;}</p>
+<p class="p1">.form-input{width:100%;padding:9px 12px;border:1px solid var(--g300);border-radius:8px;font-size:14px;color:var(--g800);outline:none;transition:border .15s;}</p>
+<p class="p1">.form-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1);}</p>
+<p class="p1">.form-select{width:100%;padding:9px 12px;border:1px solid var(--g300);border-radius:8px;font-size:14px;color:var(--g800);outline:none;background:#fff;cursor:pointer;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* TABLE */</p>
+<p class="p1">.table-wrap{overflow-x:auto;}</p>
+<p class="p1">table{width:100%;border-collapse:collapse;font-size:14px;}</p>
+<p class="p1">th{text-align:left;padding:10px 14px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--g500);background:var(--g50);border-bottom:1px solid var(--g200);}</p>
+<p class="p1">td{padding:12px 14px;border-bottom:1px solid var(--g100);vertical-align:middle;}</p>
+<p class="p1">tr:hover td{background:var(--g50);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* PROGRESS */</p>
+<p class="p1">.progress-bar{background:var(--g200);border-radius:100px;height:8px;overflow:hidden;}</p>
+<p class="p1">.progress-fill{background:var(--primary);height:100%;border-radius:100px;transition:width .4s;}</p>
+<p class="p1">.progress-fill.green{background:var(--success);}</p>
+<p class="p1">.progress-fill.orange{background:var(--orange);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* PHOTO */</p>
+<p class="p1">.photo-thumb{width:48px;height:48px;object-fit:cover;border-radius:6px;cursor:pointer;}</p>
+<p class="p1">.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}</p>
+<p class="p1">.photo-card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;}</p>
+<p class="p1">.photo-card img{width:100%;height:140px;object-fit:cover;cursor:pointer;}</p>
+<p class="p1">.photo-card-body{padding:10px 12px;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── TIMER BLOCK (vista trabajadora) ── */</p>
+<p class="p1">.timer-block{border-radius:14px;padding:20px;text-align:center;margin-bottom:20px;}</p>
+<p class="p1">.timer-block.pending{background:var(--g50);border:2px dashed var(--g300);}</p>
+<p class="p1">.timer-block.running{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:2px solid var(--orange);}</p>
+<p class="p1">.timer-block.done{background:var(--sl);border:2px solid var(--success);}</p>
+<p class="p1">.timer-label{font-size:13px;font-weight:500;color:var(--g600);margin-bottom:8px;}</p>
+<p class="p1">.timer-clock{font-size:40px;font-weight:800;letter-spacing:2px;font-variant-numeric:tabular-nums;color:var(--g800);margin:8px 0;}</p>
+<p class="p1">.timer-clock.orange{color:var(--orange);}</p>
+<p class="p1">.timer-clock.green{color:var(--success);}</p>
+<p class="p1">.timer-meta{font-size:12px;color:var(--g500);margin-top:6px;}</p>
+<p class="p1">.timer-actions{display:flex;gap:12px;justify-content:center;margin-top:16px;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── TIME LOG en detalle de tarea (admin) ── */</p>
+<p class="p1">.time-log{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:14px;background:var(--g50);border-radius:10px;margin-bottom:16px;}</p>
+<p class="p1">.tl-cell{text-align:center;}</p>
+<p class="p1">.tl-val{font-size:18px;font-weight:700;}</p>
+<p class="p1">.tl-lbl{font-size:11px;color:var(--g500);margin-top:2px;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* ── COMPARATIVA (informes) ── */</p>
+<p class="p1">.ranking-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--g100);}</p>
+<p class="p1">.rank-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}</p>
+<p class="p1">.rank-1{background:#FFF9C4;color:#92400e;}</p>
+<p class="p1">.rank-2{background:#F3F4F6;color:#374151;}</p>
+<p class="p1">.rank-3{background:#FEF3C7;color:#92400e;}</p>
+<p class="p1">.rank-n{background:var(--g100);color:var(--g600);}</p>
+<p class="p1">.rank-bar-wrap{flex:1;}</p>
+<p class="p1">.rank-bar{height:10px;border-radius:100px;background:var(--primary);transition:width .5s;}</p>
+<p class="p1">.rank-bar.fast{background:var(--success);}</p>
+<p class="p1">.rank-bar.slow{background:var(--warning);}</p>
+<p class="p2"><br></p>
+<p class="p1">/* WORKER TASK CARD */</p>
+<p class="p1">.task-card-w{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin-bottom:12px;}</p>
+<p class="p2"><br></p>
+<p class="p1">/* MISC */</p>
+<p class="p1">.empty{text-align:center;padding:40px;color:var(--g400);}</p>
+<p class="p1">.empty-icon{font-size:48px;margin-bottom:12px;}</p>
+<p class="p1">.loader{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--g500);gap:10px;}</p>
+<p class="p1">.spinner{width:20px;height:20px;border:2px solid var(--g200);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;}</p>
+<p class="p1">@keyframes spin{to{transform:rotate(360deg);}}</p>
+<p class="p1">.toast{position:fixed;bottom:24px;right:24px;background:var(--g800);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:999;box-shadow:var(--sh2);animation:fadeUp .3s ease;}</p>
+<p class="p1">.toast.success{background:var(--success);}.toast.error{background:var(--danger);}.toast.orange{background:var(--orange);}</p>
+<p class="p1">@keyframes fadeUp{from{transform:translateY(16px);opacity:0;}to{transform:translateY(0);opacity:1;}}</p>
+<p class="p1">hr{border:none;border-top:1px solid var(--g100);margin:16px 0;}</p>
+<p class="p1">.divider-label{text-align:center;font-size:12px;color:var(--g400);margin:16px 0;position:relative;}</p>
+<p class="p1">.divider-label::before,.divider-label::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--g200);}</p>
+<p class="p1">.divider-label::before{left:0;}.divider-label::after{right:0;}</p>
+<p class="p2"><br></p>
+<p class="p1">@media(max-width:768px){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar{display:none;}.grid2{grid-template-columns:1fr;}.grid3{grid-template-columns:1fr 1fr;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.grid4{grid-template-columns:1fr 1fr;}.photo-grid{grid-template-columns:1fr 1fr;}</p>
+<p class="p1">}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- ═══════════════ LOGIN ═══════════════ --&gt;</p>
+<p class="p1">&lt;div id="login-screen"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="login-box"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="login-logo"&gt;🧹&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="login-title"&gt;LimpiezaPro&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="login-sub"&gt;Gestión de equipo de limpieza&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="login-tabs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="login-tab active" onclick="switchTab('admin')"&gt;👑 Administradora&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="login-tab" onclick="switchTab('worker')"&gt;👩 Trabajadora&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="admin-login"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p style="font-size:13px;color:var(--g600);text-align:center;margin-bottom:12px"&gt;PIN de administradora&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pin-display"&gt;&lt;div class="pin-dot" id="ad0"&gt;&lt;/div&gt;&lt;div class="pin-dot" id="ad1"&gt;&lt;/div&gt;&lt;div class="pin-dot" id="ad2"&gt;&lt;/div&gt;&lt;div class="pin-dot" id="ad3"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="pin-pad"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin-key" onclick="pp('a',1)"&gt;1&lt;/div&gt;&lt;div class="pin-key" onclick="pp('a',2)"&gt;2&lt;/div&gt;&lt;div class="pin-key" onclick="pp('a',3)"&gt;3&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin-key" onclick="pp('a',4)"&gt;4&lt;/div&gt;&lt;div class="pin-key" onclick="pp('a',5)"&gt;5&lt;/div&gt;&lt;div class="pin-key" onclick="pp('a',6)"&gt;6&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin-key" onclick="pp('a',7)"&gt;7&lt;/div&gt;&lt;div class="pin-key" onclick="pp('a',8)"&gt;8&lt;/div&gt;&lt;div class="pin-key" onclick="pp('a',9)"&gt;9&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin-key del" onclick="pd('a')"&gt;⌫&lt;/div&gt;&lt;div class="pin-key" onclick="pp('a',0)"&gt;0&lt;/div&gt;&lt;div class="pin-key del" onclick="pc('a')"&gt;C&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="admin-err" style="color:var(--danger);text-align:center;font-size:13px;margin-top:12px;display:none"&gt;PIN incorrecto&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="worker-login" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p style="font-size:13px;color:var(--g600);text-align:center;margin-bottom:10px"&gt;Selecciona tu nombre&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="worker-grid" id="worker-select-grid"&gt;&lt;div class="loader"&gt;&lt;div class="spinner"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="worker-pin-section" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;hr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p style="font-size:13px;color:var(--g600);text-align:center;margin-bottom:10px"&gt;Introduce tu PIN&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin-display"&gt;&lt;div class="pin-dot" id="wd0"&gt;&lt;/div&gt;&lt;div class="pin-dot" id="wd1"&gt;&lt;/div&gt;&lt;div class="pin-dot" id="wd2"&gt;&lt;/div&gt;&lt;div class="pin-dot" id="wd3"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pin-pad"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="pin-key" onclick="pp('w',1)"&gt;1&lt;/div&gt;&lt;div class="pin-key" onclick="pp('w',2)"&gt;2&lt;/div&gt;&lt;div class="pin-key" onclick="pp('w',3)"&gt;3&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="pin-key" onclick="pp('w',4)"&gt;4&lt;/div&gt;&lt;div class="pin-key" onclick="pp('w',5)"&gt;5&lt;/div&gt;&lt;div class="pin-key" onclick="pp('w',6)"&gt;6&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="pin-key" onclick="pp('w',7)"&gt;7&lt;/div&gt;&lt;div class="pin-key" onclick="pp('w',8)"&gt;8&lt;/div&gt;&lt;div class="pin-key" onclick="pp('w',9)"&gt;9&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="pin-key del" onclick="pd('w')"&gt;⌫&lt;/div&gt;&lt;div class="pin-key" onclick="pp('w',0)"&gt;0&lt;/div&gt;&lt;div class="pin-key del" onclick="pc('w')"&gt;C&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="worker-err" style="color:var(--danger);text-align:center;font-size:13px;margin-top:12px;display:none"&gt;PIN incorrecto&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- ═══════════════ APP ═══════════════ --&gt;</p>
+<p class="p1">&lt;div id="main-app" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="topbar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="topbar-logo"&gt;🧹 LimpiezaPro&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style="display:flex;align-items:center;gap:12px;font-size:13px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:flex;align-items:center;gap:6px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="avatar" id="app-av"&gt;A&lt;/div&gt;&lt;span id="app-name"&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="logout-btn" onclick="logout()"&gt;Salir&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="app"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;nav class="sidebar" id="admin-sidebar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-item active" onclick="showPage('dashboard')"&gt;&lt;span class="nav-icon"&gt;📊&lt;/span&gt;Panel&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-item" onclick="showPage('workers')"&gt;&lt;span class="nav-icon"&gt;👩&lt;/span&gt;Trabajadoras&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-item" onclick="showPage('checklists')"&gt;&lt;span class="nav-icon"&gt;✅&lt;/span&gt;Checklists&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-item" onclick="showPage('tasks')"&gt;&lt;span class="nav-icon"&gt;📋&lt;/span&gt;Tareas&lt;span class="nav-badge" id="pend-badge"&gt;0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-item" onclick="showPage('photos')"&gt;&lt;span class="nav-icon"&gt;📸&lt;/span&gt;Fotos&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-item" onclick="showPage('times')"&gt;&lt;span class="nav-icon"&gt;⏱️&lt;/span&gt;Tiempos&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="nav-item" onclick="showPage('reports')"&gt;&lt;span class="nav-icon"&gt;📈&lt;/span&gt;Informes&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="main"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- DASHBOARD --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="page active" id="page-dashboard"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-title"&gt;Panel General&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid4" style="margin-bottom:24px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-card stat-blue"&gt;&lt;div class="stat-label"&gt;Trabajadoras&lt;/div&gt;&lt;div class="stat-value" id="s-w"&gt;–&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-card stat-green"&gt;&lt;div class="stat-label"&gt;Completadas&lt;/div&gt;&lt;div class="stat-value" id="s-d"&gt;–&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-card stat-yellow"&gt;&lt;div class="stat-label"&gt;Pendientes&lt;/div&gt;&lt;div class="stat-value" id="s-p"&gt;–&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-card stat-orange"&gt;&lt;div class="stat-label"&gt;En curso&lt;/div&gt;&lt;div class="stat-value" id="s-r"&gt;–&lt;/div&gt;&lt;div class="stat-sub"&gt;ahora mismo&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="card-header"&gt;&lt;div class="card-title"&gt;Tareas de Hoy&lt;/div&gt;&lt;span class="badge badge-blue" id="today-lbl"&gt;&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="today-tasks"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="card-header"&gt;&lt;div class="card-title"&gt;Rendimiento del Equipo&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="team-perf"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- WORKERS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="page" id="page-workers"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="section-title" style="margin:0"&gt;Equipo de Limpieza&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-primary" onclick="openWorkerModal()"&gt;+ Añadir Trabajadora&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid3" id="workers-grid"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- CHECKLISTS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="page" id="page-checklists"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="section-title" style="margin:0"&gt;Plantillas de Checklist&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-primary" onclick="openChecklistModal()"&gt;+ Nueva Plantilla&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="checklists-list"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- TASKS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="page" id="page-tasks"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="section-title" style="margin:0"&gt;Asignación de Tareas&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-primary" onclick="openTaskModal()"&gt;+ Asignar Tarea&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;&lt;div class="table-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Trabajadora&lt;/th&gt;&lt;th&gt;Checklist&lt;/th&gt;&lt;th&gt;Zona&lt;/th&gt;&lt;th&gt;Fecha&lt;/th&gt;&lt;th&gt;Progreso&lt;/th&gt;&lt;th&gt;⏱️ Tiempo&lt;/th&gt;&lt;th&gt;Estado&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;tbody id="tasks-tbody"&gt;&lt;/tbody&gt;&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- PHOTOS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="page" id="page-photos"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-title"&gt;Evidencias Fotográficas&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="photos-gallery" class="photo-grid"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- ── TIEMPOS ── --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="page" id="page-times"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-title"&gt;Control de Tiempos&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid2" style="margin-bottom:24px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="card-header"&gt;&lt;div class="card-title"&gt;⏱️ Tareas en curso ahora&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="running-tasks"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="card-header"&gt;&lt;div class="card-title"&gt;✅ Últimas finalizadas&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="recent-finished"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;&lt;div class="card-title"&gt;📋 Historial de tiempos&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="table-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Trabajadora&lt;/th&gt;&lt;th&gt;Tarea&lt;/th&gt;&lt;th&gt;Zona&lt;/th&gt;&lt;th&gt;Inicio&lt;/th&gt;&lt;th&gt;Fin&lt;/th&gt;&lt;th&gt;Duración&lt;/th&gt;&lt;th&gt;Vs. media&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;tbody id="times-tbody"&gt;&lt;/tbody&gt;&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- REPORTS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="page" id="page-reports"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-title"&gt;Informes de Rendimiento&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid2" style="margin-bottom:20px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;&lt;div class="card-header"&gt;&lt;div class="card-title"&gt;Completado por Trabajadora&lt;/div&gt;&lt;/div&gt;&lt;div id="rep-worker"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card"&gt;&lt;div class="card-header"&gt;&lt;div class="card-title"&gt;Resumen General&lt;/div&gt;&lt;/div&gt;&lt;div id="rep-summary"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;&lt;div class="card-title"&gt;🏆 Ranking de Velocidad (tiempo medio por tarea)&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div id="rep-ranking"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;!-- WORKER VIEW --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="page" id="page-worker-view"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="section-title" id="wv-title"&gt;Mis Tareas&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="worker-tasks-list"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- ═══════ MODAL: VER TAREA (admin + worker) ═══════ --&gt;</p>
+<p class="p1">&lt;div class="modal-overlay" id="view-task-modal" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-header"&gt;&lt;div class="modal-title" id="vt-title"&gt;Tarea&lt;/div&gt;&lt;span class="close-btn" onclick="cm('view-task-modal')"&gt;×&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-body" id="vt-body"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-footer" id="vt-footer"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MODAL: TRABAJADORA --&gt;</p>
+<p class="p1">&lt;div class="modal-overlay" id="worker-modal" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-header"&gt;&lt;div class="modal-title" id="wm-title"&gt;Nueva Trabajadora&lt;/div&gt;&lt;span class="close-btn" onclick="cm('worker-modal')"&gt;×&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Nombre completo *&lt;/label&gt;&lt;input class="form-input" id="w-name" placeholder="Ej: María García"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Teléfono&lt;/label&gt;&lt;input class="form-input" id="w-phone" placeholder="+34 600 000 000"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Zona habitual&lt;/label&gt;&lt;input class="form-input" id="w-zone" placeholder="Ej: Edificio A"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Turno&lt;/label&gt;&lt;select class="form-select" id="w-shift"&gt;&lt;option&gt;Mañana&lt;/option&gt;&lt;option&gt;Tarde&lt;/option&gt;&lt;option&gt;Noche&lt;/option&gt;&lt;option&gt;Parcial&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Especialidad&lt;/label&gt;&lt;select class="form-select" id="w-spec"&gt;&lt;option&gt;General&lt;/option&gt;&lt;option&gt;Cristales&lt;/option&gt;&lt;option&gt;Industrial&lt;/option&gt;&lt;option&gt;Hospitalaria&lt;/option&gt;&lt;option&gt;Alfombras&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;PIN de acceso (4 dígitos) *&lt;/label&gt;&lt;input class="form-input" id="w-pin" type="password" maxlength="4" placeholder="••••" inputmode="numeric"&gt;&lt;div style="font-size:12px;color:var(--g500);margin-top:4px"&gt;La trabajadora usa este PIN para entrar&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-secondary" onclick="cm('worker-modal')"&gt;Cancelar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-primary" id="save-worker-btn" onclick="saveWorker()"&gt;Guardar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MODAL: CHECKLIST --&gt;</p>
+<p class="p1">&lt;div class="modal-overlay" id="checklist-modal" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-header"&gt;&lt;div class="modal-title"&gt;Plantilla de Checklist&lt;/div&gt;&lt;span class="close-btn" onclick="cm('checklist-modal')"&gt;×&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Nombre *&lt;/label&gt;&lt;input class="form-input" id="cl-name" placeholder="Ej: Limpieza oficina diaria"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Tipo&lt;/label&gt;&lt;select class="form-select" id="cl-type"&gt;&lt;option&gt;Oficina&lt;/option&gt;&lt;option&gt;Baño&lt;/option&gt;&lt;option&gt;Zona común&lt;/option&gt;&lt;option&gt;Cocina&lt;/option&gt;&lt;option&gt;Almacén&lt;/option&gt;&lt;option&gt;Exterior&lt;/option&gt;&lt;option&gt;Habitación&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;label class="form-label"&gt;Tareas&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="cl-items-list"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;gap:8px;margin-top:8px;align-items:center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input class="form-input" id="cl-new-item" placeholder="Nueva tarea..." style="flex:1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label style="display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;white-space:nowrap"&gt;&lt;input type="checkbox" id="cl-req-photo"&gt; 📸&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-primary btn-sm" onclick="addCLItem()"&gt;+&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-secondary" onclick="cm('checklist-modal')"&gt;Cancelar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-primary" onclick="saveChecklist()"&gt;Guardar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MODAL: TAREA --&gt;</p>
+<p class="p1">&lt;div class="modal-overlay" id="task-modal" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-header"&gt;&lt;div class="modal-title"&gt;Asignar Tarea&lt;/div&gt;&lt;span class="close-btn" onclick="cm('task-modal')"&gt;×&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Trabajadora *&lt;/label&gt;&lt;select class="form-select" id="t-worker"&gt;&lt;/select&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Plantilla de Checklist *&lt;/label&gt;&lt;select class="form-select" id="t-checklist"&gt;&lt;/select&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Zona / Ubicación *&lt;/label&gt;&lt;input class="form-input" id="t-zone" placeholder="Ej: Planta 2, Sala 201"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Fecha&lt;/label&gt;&lt;input class="form-input" type="date" id="t-date"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Hora prevista&lt;/label&gt;&lt;input class="form-input" type="time" id="t-time" value="08:00"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Prioridad&lt;/label&gt;&lt;select class="form-select" id="t-priority"&gt;&lt;option&gt;Normal&lt;/option&gt;&lt;option&gt;Alta&lt;/option&gt;&lt;option&gt;Urgente&lt;/option&gt;&lt;/select&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-group"&gt;&lt;label class="form-label"&gt;Notas&lt;/label&gt;&lt;textarea class="form-input" id="t-notes" rows="2" placeholder="Instrucciones especiales..."&gt;&lt;/textarea&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-secondary" onclick="cm('task-modal')"&gt;Cancelar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-primary" id="save-task-btn" onclick="saveTask()"&gt;Asignar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">// ═══ INIT ═══</p>
+<p class="p1">const { createClient } = supabase;</p>
+<p class="p1">const db = createClient(SUPABASE_URL, SUPABASE_KEY);</p>
+<p class="p1">const COLORS = ['#2563eb','#7c3aed','#db2777','#ea580c','#059669','#0891b2','#4f46e5','#be185d'];</p>
+<p class="p2"><br></p>
+<p class="p1">let CU=null, Ws=[], Cls=[], Ts=[], Ps=[];</p>
+<p class="p1">let editWId=null, editClId=null, tempCL=[], viewTId=null, selW=null;</p>
+<p class="p1">let pins={a:'',w:''}, timerInterval=null;</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ PIN ═══</p>
+<p class="p1">function pp(t,n){const b=pins[t]+n;if(b.length&gt;4)return;pins[t]=b;upd(t);if(b.length===4)setTimeout(()=&gt;chkPin(t),150);}</p>
+<p class="p1">function pd(t){pins[t]=pins[t].slice(0,-1);upd(t);}</p>
+<p class="p1">function pc(t){pins[t]='';upd(t);}</p>
+<p class="p1">function upd(t){const p=t==='a'?'ad':'wd',l=pins[t].length;for(let i=0;i&lt;4;i++){const d=document.getElementById(p+i);if(d)d.style.background=i&lt;l?'var(--primary)':'var(--g200)';}}</p>
+<p class="p1">async function chkPin(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t==='a'){if(pins.a===ADMIN_PIN){CU={role:'admin',name:'Administradora'};await loginOk();}else{showErr('admin-err');pins.a='';upd('a');}}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else{if(selW&amp;&amp;pins.w===selW.pin){CU={role:'worker',...selW};await loginOk();}else{showErr('worker-err');pins.w='';upd('w');}}</p>
+<p class="p1">}</p>
+<p class="p1">function showErr(id){const e=document.getElementById(id);e.style.display='block';setTimeout(()=&gt;e.style.display='none',2000);}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ LOGIN ═══</p>
+<p class="p1">function switchTab(t){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.login-tab').forEach((e,i)=&gt;e.classList.toggle('active',(i===0&amp;&amp;t==='a')||(i===1&amp;&amp;t==='w')));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('admin-login').style.display=t==='a'?'block':'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('worker-login').style.display=t==='w'?'block':'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t==='w')loadLoginWs();</p>
+<p class="p1">}</p>
+<p class="p1">async function loadLoginWs(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const g=document.getElementById('worker-select-grid');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>g.innerHTML='&lt;div class="loader"&gt;&lt;div class="spinner"&gt;&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const {data}=await db.from('workers').select('*').eq('active',true).order('name');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>window._lw=data||[];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>g.innerHTML=!data?.length?'&lt;p style="color:var(--g500);font-size:13px;text-align:center;padding:20px"&gt;Sin trabajadoras registradas&lt;/p&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>data.map(w=&gt;`&lt;div class="worker-btn" id="wb-${w.id}" onclick="selWorker('${w.id}')"&gt;&lt;div class="w-av" style="background:${wc(w)}"&gt;${w.name[0]}&lt;/div&gt;${w.name}&lt;/div&gt;`).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function selWorker(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.worker-btn').forEach(b=&gt;b.classList.remove('selected'));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('wb-'+id)?.classList.add('selected');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>selW=(window._lw||[]).find(w=&gt;w.id===id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('worker-pin-section').style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>pins.w='';upd('w');</p>
+<p class="p1">}</p>
+<p class="p1">async function loginOk(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('login-screen').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('main-app').style.display='block';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('app-name').textContent=CU.name;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('app-av').textContent=(CU.name||'A')[0].toUpperCase();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await loadAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(CU.role==='admin'){document.getElementById('admin-sidebar').style.display='block';showPage('dashboard');}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else{document.getElementById('admin-sidebar').style.display='none';showPage('worker-view');}</p>
+<p class="p1">}</p>
+<p class="p1">function logout(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>CU=null;pins={a:'',w:''};selW=null;upd('a');upd('w');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(timerInterval)clearInterval(timerInterval);timerInterval=null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('main-app').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('login-screen').style.display='flex';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('worker-pin-section').style.display='none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.worker-btn').forEach(b=&gt;b.classList.remove('selected'));</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ DATA ═══</p>
+<p class="p1">async function loadAll(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [a,b,c,d]=await Promise.all([</p>
+<p class="p1"><span class="Apple-converted-space">    </span>db.from('workers').select('*').order('name'),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>db.from('checklists').select('*').order('name'),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>db.from('tasks').select('*').order('created_at',{ascending:false}),</p>
+<p class="p1"><span class="Apple-converted-space">    </span>db.from('photos').select('*').order('created_at',{ascending:false})</p>
+<p class="p1"><span class="Apple-converted-space">  </span>]);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Ws=a.data||[];Cls=b.data||[];Ts=c.data||[];Ps=d.data||[];</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ NAVIGATION ═══</p>
+<p class="p1">function showPage(p){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.page').forEach(e=&gt;e.classList.remove('active'));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.nav-item').forEach(e=&gt;e.classList.remove('active'));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('page-'+p).classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const idx=['dashboard','workers','checklists','tasks','photos','times','reports'].indexOf(p);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(idx&gt;=0)document.querySelectorAll('.nav-item')[idx]?.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderPage(p);</p>
+<p class="p1">}</p>
+<p class="p1">function renderPage(p){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>({dashboard:renderDash,workers:renderWorkers,checklists:renderCLs,tasks:renderTasks,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>photos:renderPhotos,times:renderTimes,reports:renderReports,'worker-view':renderWorkerView}[p]||function(){})();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ HELPERS ═══</p>
+<p class="p1">function wc(w){return COLORS[(w?.id||'a').charCodeAt(0)%COLORS.length];}</p>
+<p class="p1">function pct(t){const it=t.items||[];return it.length?Math.round(it.filter(i=&gt;i.done).length/it.length*100):0;}</p>
+<p class="p1">function today(){return new Date().toISOString().split('T')[0];}</p>
+<p class="p1">function fmtTime(iso){if(!iso)return'–';return new Date(iso).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});}</p>
+<p class="p1">function fmtDate(iso){if(!iso)return'–';return new Date(iso).toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'});}</p>
+<p class="p1">function fmtDur(mins){if(!mins&amp;&amp;mins!==0)return'–';if(mins&lt;60)return`${mins} min`;return`${Math.floor(mins/60)}h ${mins%60}m`;}</p>
+<p class="p1">function calcMins(start,end){if(!start||!end)return null;return Math.round((new Date(end)-new Date(start))/60000);}</p>
+<p class="p1">function elapsed(startIso){const s=Math.floor((Date.now()-new Date(startIso))/1000);const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;return h&gt;0?`${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`:`${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;}</p>
+<p class="p1">function cm(id){document.getElementById(id).style.display='none';}</p>
+<p class="p1">function toast(msg,type=''){const t=document.createElement('div');t.className='toast '+type;t.textContent=msg;document.body.appendChild(t);setTimeout(()=&gt;t.remove(),3200);}</p>
+<p class="p1">function avgMins(tasks){const done=tasks.filter(t=&gt;t.duration_minutes&gt;0);return done.length?Math.round(done.reduce((s,t)=&gt;s+t.duration_minutes,0)/done.length):null;}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ DASHBOARD ═══</p>
+<p class="p1">async function renderDash(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await loadAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const running=Ts.filter(t=&gt;t.status==='En curso');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const done=Ts.filter(t=&gt;t.status==='Completada');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const pend=Ts.filter(t=&gt;t.status==='Pendiente');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('s-w').textContent=Ws.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('s-d').textContent=done.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('s-p').textContent=pend.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('s-r').textContent=running.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('pend-badge').textContent=pend.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('today-lbl').textContent=new Date().toLocaleDateString('es-ES',{day:'numeric',month:'long'});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const td=Ts.filter(t=&gt;t.date===today());</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('today-tasks').innerHTML=!td.length?'&lt;div class="empty"&gt;&lt;div class="empty-icon"&gt;📋&lt;/div&gt;No hay tareas para hoy&lt;/div&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>td.map(t=&gt;{const w=Ws.find(x=&gt;x.id===t.worker_id),p=pct(t);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const statusBadge=t.status==='Completada'?'badge-green':t.status==='En curso'?'badge-orange':t.priority==='Urgente'?'badge-red':t.priority==='Alta'?'badge-yellow':'badge-blue';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const dur=t.duration_minutes?`· ⏱️ ${fmtDur(t.duration_minutes)}`:'';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return`&lt;div style="padding:10px 0;border-bottom:1px solid var(--g100)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span style="font-weight:500;font-size:14px"&gt;${t.checklist_name||'—'}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="badge ${statusBadge}"&gt;${t.status}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="font-size:12px;color:var(--g500);margin-bottom:6px"&gt;👩 ${w?w.name:'?'} · 📍 ${t.zone} ${dur}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="progress-bar"&gt;&lt;div class="progress-fill ${p===100?'green':t.status==='En curso'?'orange':''}" style="width:${p}%"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;}).join('');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('team-perf').innerHTML=!Ws.length?'&lt;div class="empty"&gt;Añade trabajadoras&lt;/div&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Ws.map(w=&gt;{const wt=Ts.filter(t=&gt;t.worker_id===w.id),wd=wt.filter(t=&gt;t.status==='Completada').length,p=wt.length?Math.round(wd/wt.length*100):0,avg=avgMins(wt);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return`&lt;div style="margin-bottom:14px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="display:flex;align-items:center;gap:8px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="worker-avatar" style="width:28px;height:28px;font-size:12px;background:${wc(w)}"&gt;${w.name[0]}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span style="font-size:13px;font-weight:500"&gt;${w.name}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span style="font-size:12px;color:var(--g500)"&gt;${wd}/${wt.length} ${avg?`· ⏱️ ${fmtDur(avg)}`:''}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="progress-bar"&gt;&lt;div class="progress-fill ${p===100?'green':''}" style="width:${p}%"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;}).join('');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ WORKERS ═══</p>
+<p class="p1">async function renderWorkers(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await loadAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const g=document.getElementById('workers-grid');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>g.innerHTML=!Ws.length?'&lt;div class="empty" style="grid-column:1/-1"&gt;&lt;div class="empty-icon"&gt;👩&lt;/div&gt;No hay trabajadoras&lt;/div&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Ws.map(w=&gt;{const wt=Ts.filter(t=&gt;t.worker_id===w.id),wd=wt.filter(t=&gt;t.status==='Completada').length,wp=Ps.filter(p=&gt;p.worker_id===w.id).length,avg=avgMins(wt);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return`&lt;div class="worker-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;align-items:center;gap:12px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="worker-avatar" style="background:${wc(w)}"&gt;${w.name[0]}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="flex:1"&gt;&lt;div style="font-weight:600;font-size:15px"&gt;${w.name}&lt;/div&gt;&lt;div style="font-size:12px;color:var(--g500)"&gt;${w.shift||''} · ${w.spec||''}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="badge badge-green"&gt;Activa&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>${w.zone?`&lt;div style="font-size:12px;color:var(--g500)"&gt;📍 ${w.zone}&lt;/div&gt;`:''}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>${w.phone?`&lt;div style="font-size:12px;color:var(--g500)"&gt;📞 ${w.phone}&lt;/div&gt;`:''}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="worker-stats"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="wstat"&gt;&lt;div class="wstat-v" style="color:var(--primary)"&gt;${wt.length}&lt;/div&gt;&lt;div class="wstat-l"&gt;Total&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="wstat"&gt;&lt;div class="wstat-v" style="color:var(--success)"&gt;${wd}&lt;/div&gt;&lt;div class="wstat-l"&gt;Hechas&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="wstat"&gt;&lt;div class="wstat-v" style="color:var(--orange)"&gt;${avg?fmtDur(avg):'–'}&lt;/div&gt;&lt;div class="wstat-l"&gt;T. medio&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="font-size:12px;color:var(--g500)"&gt;📸 ${wp} fotos&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;gap:8px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-secondary btn-sm" onclick="openWorkerModal('${w.id}')"&gt;✏️ Editar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-primary btn-sm" onclick="openTaskModalFor('${w.id}')"&gt;📋 Asignar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-danger btn-sm" onclick="delWorker('${w.id}')"&gt;🗑️&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;}).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function openWorkerModal(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>editWId=id||null;document.getElementById('wm-title').textContent=id?'Editar Trabajadora':'Nueva Trabajadora';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const w=id?Ws.find(x=&gt;x.id===id):null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>['w-name','w-phone','w-zone'].forEach(k=&gt;document.getElementById(k).value=w?.[k.slice(2).replace('-','')]||w?.[k.slice(2)]||'');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('w-name').value=w?.name||'';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('w-phone').value=w?.phone||'';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('w-zone').value=w?.zone||'';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('w-shift').value=w?.shift||'Mañana';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('w-spec').value=w?.spec||'General';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('w-pin').value='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('worker-modal').style.display='flex';</p>
+<p class="p1">}</p>
+<p class="p1">async function saveWorker(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const name=document.getElementById('w-name').value.trim(),pin=document.getElementById('w-pin').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!name){toast('Nombre obligatorio','error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!editWId&amp;&amp;(!pin||pin.length!==4)){toast('PIN debe tener 4 dígitos','error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const btn=document.getElementById('save-worker-btn');btn.disabled=true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const data={name,phone:document.getElementById('w-phone').value.trim(),zone:document.getElementById('w-zone').value.trim(),shift:document.getElementById('w-shift').value,spec:document.getElementById('w-spec').value};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(pin)data.pin=pin;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const {error}=editWId?await db.from('workers').update(data).eq('id',editWId):await db.from('workers').insert({...data,pin:pin||'0000',active:true});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.disabled=false;if(error){toast('Error: '+error.message,'error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast('Guardado ✓','success');await loadAll();cm('worker-modal');renderWorkers();</p>
+<p class="p1">}</p>
+<p class="p1">async function delWorker(id){if(!confirm('¿Eliminar esta trabajadora?'))return;await db.from('workers').delete().eq('id',id);await loadAll();renderWorkers();}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ CHECKLISTS ═══</p>
+<p class="p1">async function renderCLs(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await loadAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('checklists-list').innerHTML=!Cls.length?'&lt;div class="card"&gt;&lt;div class="empty"&gt;&lt;div class="empty-icon"&gt;✅&lt;/div&gt;No hay plantillas&lt;/div&gt;&lt;/div&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Cls.map(cl=&gt;`&lt;div class="card" style="margin-bottom:16px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card-header"&gt;&lt;div&gt;&lt;div class="card-title"&gt;${cl.name}&lt;/div&gt;&lt;span class="badge badge-blue" style="margin-top:4px"&gt;${cl.type}&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:flex;gap:8px"&gt;&lt;button class="btn btn-secondary btn-sm" onclick="openChecklistModal('${cl.id}')"&gt;✏️&lt;/button&gt;&lt;button class="btn btn-danger btn-sm" onclick="delCL('${cl.id}')"&gt;🗑️&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>${(cl.items||[]).map((it,i)=&gt;`&lt;div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--g100)"&gt;&lt;span style="color:var(--g400);font-size:13px;min-width:20px"&gt;${i+1}.&lt;/span&gt;&lt;span style="flex:1;font-size:14px"&gt;${it.text}&lt;/span&gt;${it.requiresPhoto?'&lt;span class="badge badge-yellow"&gt;📸&lt;/span&gt;':''}&lt;/div&gt;`).join('')}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="margin-top:10px;font-size:12px;color:var(--g500)"&gt;${(cl.items||[]).length} tareas&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function openChecklistModal(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>editClId=id||null;tempCL=[];document.getElementById('cl-name').value='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(id){const cl=Cls.find(x=&gt;x.id===id);if(cl){document.getElementById('cl-name').value=cl.name;document.getElementById('cl-type').value=cl.type;tempCL=[...(cl.items||[])];}}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderCLItems();document.getElementById('checklist-modal').style.display='flex';</p>
+<p class="p1">}</p>
+<p class="p1">function addCLItem(){const txt=document.getElementById('cl-new-item').value.trim();if(!txt)return;tempCL.push({text:txt,requiresPhoto:document.getElementById('cl-req-photo').checked});document.getElementById('cl-new-item').value='';document.getElementById('cl-req-photo').checked=false;renderCLItems();}</p>
+<p class="p1">function renderCLItems(){document.getElementById('cl-items-list').innerHTML=tempCL.map((it,i)=&gt;`&lt;div style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:var(--g50);border-radius:6px;margin-bottom:4px"&gt;&lt;span style="flex:1;font-size:13px"&gt;${it.text}&lt;/span&gt;${it.requiresPhoto?'&lt;span style="font-size:11px;color:var(--warning)"&gt;📸&lt;/span&gt;':''}&lt;span style="cursor:pointer;color:var(--danger);font-size:18px;line-height:1" onclick="tempCL.splice(${i},1);renderCLItems()"&gt;×&lt;/span&gt;&lt;/div&gt;`).join('')||'&lt;div style="font-size:13px;color:var(--g400);padding:8px"&gt;Sin tareas&lt;/div&gt;';}</p>
+<p class="p1">async function saveChecklist(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const name=document.getElementById('cl-name').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!name){toast('Nombre obligatorio','error');return;}if(!tempCL.length){toast('Añade al menos una tarea','error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const data={name,type:document.getElementById('cl-type').value,items:tempCL};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const {error}=editClId?await db.from('checklists').update(data).eq('id',editClId):await db.from('checklists').insert(data);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(error){toast('Error: '+error.message,'error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast('Guardado ✓','success');await loadAll();cm('checklist-modal');renderCLs();</p>
+<p class="p1">}</p>
+<p class="p1">async function delCL(id){if(!confirm('¿Eliminar?'))return;await db.from('checklists').delete().eq('id',id);await loadAll();renderCLs();}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ TASKS ═══</p>
+<p class="p1">async function renderTasks(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await loadAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tbody=document.getElementById('tasks-tbody');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tbody.innerHTML=!Ts.length?'&lt;tr&gt;&lt;td colspan="8"&gt;&lt;div class="empty"&gt;No hay tareas&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Ts.map(t=&gt;{const w=Ws.find(x=&gt;x.id===t.worker_id),p=pct(t);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const sc=t.status==='Completada'?'badge-green':t.status==='En curso'?'badge-orange':t.status==='En progreso'?'badge-blue':'badge-gray';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const pc=t.priority==='Urgente'?'badge-red':t.priority==='Alta'?'badge-yellow':'badge-gray';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const durTd=t.duration_minutes?`&lt;span style="font-weight:600;color:var(--success)"&gt;${fmtDur(t.duration_minutes)}&lt;/span&gt;`:t.started_at&amp;&amp;!t.finished_at?`&lt;span style="color:var(--orange)"&gt;En curso…&lt;/span&gt;`:'–';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return`&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td&gt;&lt;div style="display:flex;align-items:center;gap:8px"&gt;&lt;div class="worker-avatar" style="width:28px;height:28px;font-size:12px;background:${wc(w)}"&gt;${w?w.name[0]:'?'}&lt;/div&gt;${w?w.name:'—'}&lt;/div&gt;&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td&gt;${t.checklist_name||'—'}&lt;/td&gt;&lt;td style="font-size:13px;color:var(--g600)"&gt;${t.zone}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td style="font-size:13px"&gt;${t.date}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td style="min-width:100px"&gt;&lt;div class="progress-bar" style="margin-bottom:4px"&gt;&lt;div class="progress-fill ${p===100?'green':t.status==='En curso'?'orange':''}" style="width:${p}%"&gt;&lt;/div&gt;&lt;/div&gt;&lt;span style="font-size:11px;color:var(--g500)"&gt;${p}%&lt;/span&gt;&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td&gt;${durTd}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td&gt;&lt;span class="badge ${sc}"&gt;${t.status}&lt;/span&gt; &lt;span class="badge ${pc}" style="margin-left:4px"&gt;${t.priority}&lt;/span&gt;&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td&gt;&lt;button class="btn btn-secondary btn-sm" onclick="viewTask('${t.id}')"&gt;Ver&lt;/button&gt; &lt;button class="btn btn-danger btn-sm" onclick="delTask('${t.id}')"&gt;🗑️&lt;/button&gt;&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/tr&gt;`;}).join('');</p>
+<p class="p1">}</p>
+<p class="p1">function openTaskModal(){openTaskModalFor(null);}</p>
+<p class="p1">function openTaskModalFor(wId){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('t-worker').innerHTML=Ws.map(w=&gt;`&lt;option value="${w.id}"&gt;${w.name}&lt;/option&gt;`).join('')||'&lt;option&gt;Sin trabajadoras&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('t-checklist').innerHTML=Cls.map(c=&gt;`&lt;option value="${c.id}"&gt;${c.name}&lt;/option&gt;`).join('')||'&lt;option&gt;Sin plantillas&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(wId)document.getElementById('t-worker').value=wId;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('t-date').value=today();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('t-zone').value='';document.getElementById('t-notes').value='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('task-modal').style.display='flex';</p>
+<p class="p1">}</p>
+<p class="p1">async function saveTask(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const wId=document.getElementById('t-worker').value,clId=document.getElementById('t-checklist').value,zone=document.getElementById('t-zone').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(!zone){toast('La zona es obligatoria','error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cl=Cls.find(x=&gt;x.id===clId),items=(cl?.items||[]).map(i=&gt;({...i,done:false,photo:null}));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const btn=document.getElementById('save-task-btn');btn.disabled=true;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const {error}=await db.from('tasks').insert({worker_id:wId,checklist_id:clId,checklist_name:cl?.name||'',zone,date:document.getElementById('t-date').value,time:document.getElementById('t-time').value,priority:document.getElementById('t-priority').value,notes:document.getElementById('t-notes').value,status:'Pendiente',items});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>btn.disabled=false;if(error){toast('Error: '+error.message,'error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast('Tarea asignada ✓','success');await loadAll();cm('task-modal');renderTasks();</p>
+<p class="p1">}</p>
+<p class="p1">async function delTask(id){if(!confirm('¿Eliminar?'))return;await db.from('tasks').delete().eq('id',id);await loadAll();renderTasks();}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══════════════════════════════════════</p>
+<p class="p1">// ═══ VIEW TASK (con control de tiempo) ══</p>
+<p class="p1">// ═══════════════════════════════════════</p>
+<p class="p1">function viewTask(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>viewTId=id;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t=Ts.find(x=&gt;x.id===id);if(!t)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const w=Ws.find(x=&gt;x.id===t.worker_id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const isWorker=CU.role==='worker';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const canEdit=!isWorker||(CU.id===t.worker_id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('vt-title').textContent=`${t.checklist_name||'Tarea'} – ${t.zone}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// ── Bloque de tiempo ──</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let timerHTML='';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(canEdit){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(!t.started_at){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// SIN EMPEZAR</p>
+<p class="p1"><span class="Apple-converted-space">      </span>timerHTML=`&lt;div class="timer-block pending"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-label"&gt;Esta tarea aún no ha comenzado&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="font-size:32px;margin:8px 0"&gt;⏳&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-meta"&gt;Pulsa el botón cuando empieces a limpiar&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-orange btn-lg" onclick="startTask('${id}')"&gt;▶ Empezar ahora&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>} else if(!t.finished_at){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// EN CURSO</p>
+<p class="p1"><span class="Apple-converted-space">      </span>timerHTML=`&lt;div class="timer-block running"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-label"&gt;⏱️ Tarea en curso&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-clock orange" id="live-clock"&gt;${elapsed(t.started_at)}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-meta"&gt;Inicio: ${fmtTime(t.started_at)}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn btn-success btn-lg" onclick="finishTask('${id}')"&gt;■ Finalizar tarea&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// FINALIZADA</p>
+<p class="p1"><span class="Apple-converted-space">      </span>timerHTML=`&lt;div class="timer-block done"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-label"&gt;✅ Tarea completada&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-clock green"&gt;${fmtDur(t.duration_minutes)}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="timer-meta"&gt;Inicio ${fmtTime(t.started_at)} → Fin ${fmtTime(t.finished_at)}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// admin viendo → log completo</p>
+<p class="p1"><span class="Apple-converted-space">    </span>timerHTML=`&lt;div class="time-log"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tl-cell"&gt;&lt;div class="tl-val" style="color:var(--orange)"&gt;${fmtTime(t.started_at)}&lt;/div&gt;&lt;div class="tl-lbl"&gt;Inicio&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tl-cell"&gt;&lt;div class="tl-val" style="color:var(--success)"&gt;${fmtTime(t.finished_at)}&lt;/div&gt;&lt;div class="tl-lbl"&gt;Fin&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tl-cell"&gt;&lt;div class="tl-val" style="color:var(--primary)"&gt;${fmtDur(t.duration_minutes)}&lt;/div&gt;&lt;div class="tl-lbl"&gt;Duración&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// ── Meta de la tarea ──</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const metaHTML=`&lt;div style="font-size:13px;color:var(--g600);margin-bottom:16px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>👩 ${w?w.name:'?'} · 📅 ${t.date} ${t.time||''} · 📍 ${t.zone}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>${t.notes?`&lt;div style="margin-top:6px;padding:8px;background:var(--g50);border-radius:6px"&gt;${t.notes}&lt;/div&gt;`:''}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// ── Items checklist ──</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const blocked=canEdit&amp;&amp;!t.started_at; // no puede marcar si no empezó</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const itemsHTML=(t.items||[]).map((item,i)=&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cl-item ${item.done?'done':''}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="checkbox ${item.done?'checked':''}" ${canEdit&amp;&amp;!blocked?`onclick="togItem('${id}',${i})"`:'style="cursor:default"'}&gt;${item.done?'✓':''}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span style="flex:1;font-size:14px" class="${item.done?'done-text':''}"&gt;${item.text}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>${item.requiresPhoto&amp;&amp;canEdit&amp;&amp;t.started_at?`&lt;label style="cursor:pointer;font-size:13px;color:${item.photo?'var(--success)':'var(--primary)'};text-decoration:underline"&gt;${item.photo?'✅ Foto':'📷 Subir'}&lt;input type="file" accept="image/*" capture="environment" style="display:none" onchange="upPhoto('${id}',${i},this)"&gt;&lt;/label&gt;`:''}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>${item.photo?`&lt;img src="${item.photo}" class="photo-thumb" onclick="prevImg('${item.photo}')"&gt;`:item.requiresPhoto&amp;&amp;!canEdit?'&lt;span style="font-size:11px;color:var(--g400)"&gt;📸 Pendiente&lt;/span&gt;':''}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`).join('');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const warningHTML=blocked?`&lt;div style="background:var(--wl);border:1px solid var(--warning);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--warning);margin-bottom:12px"&gt;⚠️ Pulsa &lt;strong&gt;Empezar&lt;/strong&gt; antes de marcar las tareas&lt;/div&gt;`:'';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('vt-body').innerHTML=timerHTML+metaHTML+warningHTML+itemsHTML;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('vt-footer').innerHTML=`</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn btn-secondary" onclick="cm('view-task-modal')"&gt;Cerrar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>${canEdit&amp;&amp;t.started_at&amp;&amp;!t.finished_at?`&lt;button class="btn btn-success" onclick="markAllDone('${id}')"&gt;✓ Completar todo&lt;/button&gt;`:''}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('view-task-modal').style.display='flex';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// reloj en vivo</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(timerInterval)clearInterval(timerInterval);timerInterval=null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(t.started_at&amp;&amp;!t.finished_at){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>timerInterval=setInterval(()=&gt;{const el=document.getElementById('live-clock');if(el)el.textContent=elapsed(t.started_at);else clearInterval(timerInterval);},1000);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ START / FINISH ═══</p>
+<p class="p1">async function startTask(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const now=new Date().toISOString();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const {error}=await db.from('tasks').update({started_at:now,status:'En curso'}).eq('id',id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(error){toast('Error al iniciar','error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast('¡Tarea iniciada! ▶','orange');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t=Ts.find(x=&gt;x.id===id);if(t){t.started_at=now;t.status='En curso';}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>viewTask(id);</p>
+<p class="p1">}</p>
+<p class="p1">async function finishTask(id){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const now=new Date().toISOString();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t=Ts.find(x=&gt;x.id===id);if(!t)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const mins=calcMins(t.started_at,now);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const allDone=t.items&amp;&amp;t.items.every(i=&gt;i.done);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const newStatus=allDone?'Completada':'En progreso';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const {error}=await db.from('tasks').update({finished_at:now,duration_minutes:mins,status:newStatus}).eq('id',id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(error){toast('Error al finalizar','error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast(`Tarea finalizada en ${fmtDur(mins)} ✓`,'success');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>t.finished_at=now;t.duration_minutes=mins;t.status=newStatus;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(timerInterval)clearInterval(timerInterval);timerInterval=null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>viewTask(id);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(CU.role==='worker')renderWorkerView();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function togItem(tid,idx){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t=Ts.find(x=&gt;x.id===tid);t.items[idx].done=!t.items[idx].done;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await db.from('tasks').update({items:t.items}).eq('id',tid);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>viewTask(tid);</p>
+<p class="p1">}</p>
+<p class="p1">async function upPhoto(tid,idx,input){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const file=input.files[0];if(!file)return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast('Subiendo foto...','');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const ext=file.name.split('.').pop(),path=`${tid}/${idx}_${Date.now()}.${ext}`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const {error}=await db.storage.from('task-photos').upload(path,file,{upsert:true});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(error){toast('Error al subir foto','error');return;}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const {data:ud}=db.storage.from('task-photos').getPublicUrl(path);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t=Ts.find(x=&gt;x.id===tid);t.items[idx].photo=ud.publicUrl;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await db.from('tasks').update({items:t.items}).eq('id',tid);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await db.from('photos').insert({task_id:tid,worker_id:t.worker_id,item_index:idx,url:ud.publicUrl,zone:t.zone});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Ps=(await db.from('photos').select('*').order('created_at',{ascending:false})).data||[];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>toast('Foto subida ✓','success');viewTask(tid);</p>
+<p class="p1">}</p>
+<p class="p1">async function markAllDone(tid){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const t=Ts.find(x=&gt;x.id===tid);t.items.forEach(i=&gt;i.done=true);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await db.from('tasks').update({items:t.items}).eq('id',tid);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await finishTask(tid);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ TIEMPOS (página admin) ═══</p>
+<p class="p1">async function renderTimes(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await loadAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// En curso</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const running=Ts.filter(t=&gt;t.started_at&amp;&amp;!t.finished_at);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('running-tasks').innerHTML=!running.length?'&lt;div class="empty" style="padding:20px"&gt;&lt;div class="empty-icon"&gt;😴&lt;/div&gt;Ninguna tarea en curso&lt;/div&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>running.map(t=&gt;{const w=Ws.find(x=&gt;x.id===t.worker_id);return`&lt;div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="worker-avatar" style="width:32px;height:32px;font-size:13px;background:${wc(w)}"&gt;${w?w.name[0]:'?'}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="flex:1"&gt;&lt;div style="font-weight:500;font-size:14px"&gt;${t.checklist_name||'—'}&lt;/div&gt;&lt;div style="font-size:12px;color:var(--g500)"&gt;${w?w.name:'?'} · ${t.zone}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="text-align:right"&gt;&lt;div style="font-weight:700;color:var(--orange);font-size:15px" id="rt-${t.id}"&gt;${elapsed(t.started_at)}&lt;/div&gt;&lt;div style="font-size:11px;color:var(--g500)"&gt;desde ${fmtTime(t.started_at)}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`;}).join('');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// actualizar relojes</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(timerInterval)clearInterval(timerInterval);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>timerInterval=setInterval(()=&gt;{running.forEach(t=&gt;{const el=document.getElementById('rt-'+t.id);if(el)el.textContent=elapsed(t.started_at);});},1000);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Recientes finalizadas</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const finished=Ts.filter(t=&gt;t.finished_at).sort((a,b)=&gt;new Date(b.finished_at)-new Date(a.finished_at)).slice(0,5);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('recent-finished').innerHTML=!finished.length?'&lt;div class="empty" style="padding:20px"&gt;&lt;div class="empty-icon"&gt;📋&lt;/div&gt;Aún sin tareas finalizadas&lt;/div&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>finished.map(t=&gt;{const w=Ws.find(x=&gt;x.id===t.worker_id);return`&lt;div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="worker-avatar" style="width:32px;height:32px;font-size:13px;background:${wc(w)}"&gt;${w?w.name[0]:'?'}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="flex:1"&gt;&lt;div style="font-weight:500;font-size:14px"&gt;${t.checklist_name||'—'}&lt;/div&gt;&lt;div style="font-size:12px;color:var(--g500)"&gt;${w?w.name:'?'} · ${t.zone}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="text-align:right"&gt;&lt;div style="font-weight:700;color:var(--success)"&gt;${fmtDur(t.duration_minutes)}&lt;/div&gt;&lt;div style="font-size:11px;color:var(--g500)"&gt;${fmtDate(t.finished_at)}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;`;}).join('');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Historial con comparativa</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const doneTs=Ts.filter(t=&gt;t.finished_at).sort((a,b)=&gt;new Date(b.finished_at)-new Date(a.finished_at));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const globalAvg=avgMins(doneTs);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('times-tbody').innerHTML=!doneTs.length?'&lt;tr&gt;&lt;td colspan="7"&gt;&lt;div class="empty"&gt;No hay tareas finalizadas aún&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>doneTs.map(t=&gt;{const w=Ws.find(x=&gt;x.id===t.worker_id);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let vs='–',vsColor='var(--g500)';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(globalAvg&amp;&amp;t.duration_minutes){const diff=t.duration_minutes-globalAvg;if(diff&lt;=-5){vs=`−${Math.abs(diff)} min más rápida`;vsColor='var(--success)';}else if(diff&gt;=5){vs=`+${diff} min más lenta`;vsColor='var(--warning)';}else{vs='En la media';vsColor='var(--g500)';}}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return`&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td&gt;&lt;div style="display:flex;align-items:center;gap:8px"&gt;&lt;div class="worker-avatar" style="width:28px;height:28px;font-size:12px;background:${wc(w)}"&gt;${w?w.name[0]:'?'}&lt;/div&gt;${w?w.name:'—'}&lt;/div&gt;&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td&gt;${t.checklist_name||'—'}&lt;/td&gt;&lt;td style="font-size:13px;color:var(--g600)"&gt;${t.zone}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td style="font-size:13px"&gt;${fmtTime(t.started_at)}&lt;br&gt;&lt;span style="font-size:11px;color:var(--g400)"&gt;${fmtDate(t.started_at)}&lt;/span&gt;&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td style="font-size:13px"&gt;${fmtTime(t.finished_at)}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td style="font-weight:600;color:var(--primary)"&gt;${fmtDur(t.duration_minutes)}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;td style="font-size:13px;font-weight:500;color:${vsColor}"&gt;${vs}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/tr&gt;`;}).join('');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ INFORMES ═══</p>
+<p class="p1">async function renderReports(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await loadAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// por trabajadora</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rep-worker').innerHTML=`&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Trabajadora&lt;/th&gt;&lt;th&gt;Asign.&lt;/th&gt;&lt;th&gt;Hechas&lt;/th&gt;&lt;th&gt;Fotos&lt;/th&gt;&lt;th&gt;T. medio&lt;/th&gt;&lt;th&gt;%&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>${Ws.map(w=&gt;{const wt=Ts.filter(t=&gt;t.worker_id===w.id),wd=wt.filter(t=&gt;t.status==='Completada').length,wp=Ps.filter(p=&gt;p.worker_id===w.id).length,p=wt.length?Math.round(wd/wt.length*100):0,avg=avgMins(wt),cl=p&gt;=80?'color:var(--success)':p&gt;=50?'color:var(--warning)':'color:var(--danger)';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return`&lt;tr&gt;&lt;td&gt;&lt;div style="display:flex;align-items:center;gap:6px"&gt;&lt;div class="worker-avatar" style="width:24px;height:24px;font-size:11px;background:${wc(w)}"&gt;${w.name[0]}&lt;/div&gt;${w.name}&lt;/div&gt;&lt;/td&gt;&lt;td&gt;${wt.length}&lt;/td&gt;&lt;td&gt;${wd}&lt;/td&gt;&lt;td&gt;${wp}&lt;/td&gt;&lt;td style="font-weight:600;color:var(--orange)"&gt;${avg?fmtDur(avg):'–'}&lt;/td&gt;&lt;td style="${cl};font-weight:600"&gt;${p}%&lt;/td&gt;&lt;/tr&gt;`;}).join('')||'&lt;tr&gt;&lt;td colspan="6" style="text-align:center;color:var(--g400)"&gt;Sin datos&lt;/td&gt;&lt;/tr&gt;'}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/tbody&gt;&lt;/table&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// resumen</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tot=Ts.length,dn=Ts.filter(t=&gt;t.status==='Completada').length,gavg=avgMins(Ts.filter(t=&gt;t.finished_at));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rep-summary').innerHTML=`&lt;div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>${[['📋 Total',tot,'var(--primary)'],['✅ Completadas',dn,'var(--success)'],['🔄 En curso',Ts.filter(t=&gt;t.status==='En curso').length,'var(--orange)'],['⏳ Pendientes',Ts.filter(t=&gt;t.status==='Pendiente').length,'var(--danger)'],['⏱️ T. medio',gavg?fmtDur(gavg):'–','var(--primary)'],['📸 Fotos',Ps.length,'var(--g600)']].map(([l,v,c])=&gt;`&lt;div style="background:var(--g50);border-radius:8px;padding:12px"&gt;&lt;div style="font-size:11px;color:var(--g500)"&gt;${l}&lt;/div&gt;&lt;div style="font-size:22px;font-weight:700;color:${c}"&gt;${v}&lt;/div&gt;&lt;/div&gt;`).join('')}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// ranking velocidad</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const ranked=Ws.map(w=&gt;{const finished=Ts.filter(t=&gt;t.worker_id===w.id&amp;&amp;t.duration_minutes&gt;0);return{w,avg:avgMins(finished),count:finished.length};})</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.filter(x=&gt;x.count&gt;0).sort((a,b)=&gt;a.avg-b.avg);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const globalAvg2=gavg;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const maxAvg=ranked.length?Math.max(...ranked.map(x=&gt;x.avg)):1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('rep-ranking').innerHTML=!ranked.length?'&lt;div class="empty"&gt;Sin suficientes datos de tiempo aún&lt;/div&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ranked.map((x,i)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const barW=Math.round((x.avg/maxAvg)*100);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const isFast=globalAvg2&amp;&amp;x.avg&lt;globalAvg2-5,isSlow=globalAvg2&amp;&amp;x.avg&gt;globalAvg2+5;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const rankCls=i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const diff=globalAvg2?x.avg-globalAvg2:0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const diffTxt=!globalAvg2?'':diff&lt;=-5?`&lt;span style="color:var(--success);font-size:12px"&gt;−${Math.abs(diff)} min vs media&lt;/span&gt;`:diff&gt;=5?`&lt;span style="color:var(--warning);font-size:12px"&gt;+${diff} min vs media&lt;/span&gt;`:`&lt;span style="color:var(--g500);font-size:12px"&gt;En la media&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return`&lt;div class="ranking-row"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="rank-num ${rankCls}"&gt;${medal||i+1}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="worker-avatar" style="width:32px;height:32px;font-size:13px;background:${wc(x.w)}"&gt;${x.w.name[0]}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="rank-bar-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span style="font-size:14px;font-weight:500"&gt;${x.w.name}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style="display:flex;align-items:center;gap:8px"&gt;&lt;span style="font-size:14px;font-weight:700;color:var(--primary)"&gt;${fmtDur(x.avg)}&lt;/span&gt; ${diffTxt}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="progress-bar"&gt;&lt;div class="rank-bar ${isFast?'fast':isSlow?'slow':''}" style="width:${barW}%"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="font-size:11px;color:var(--g500);margin-top:3px"&gt;${x.count} tarea${x.count&gt;1?'s':''} completada${x.count&gt;1?'s':''}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;}).join('');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ WORKER VIEW ═══</p>
+<p class="p1">async function renderWorkerView(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await loadAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('wv-title').textContent=`Hola, ${CU.name} 👋`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const my=Ts.filter(t=&gt;t.worker_id===CU.id).sort((a,b)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const ord={'En curso':0,'Pendiente':1,'En progreso':2,'Completada':3};</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return(ord[a.status]??9)-(ord[b.status]??9)||(a.date.localeCompare(b.date));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el=document.getElementById('worker-tasks-list');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML=!my.length?'&lt;div class="empty"&gt;&lt;div class="empty-icon"&gt;🎉&lt;/div&gt;No tienes tareas asignadas&lt;/div&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>my.map(t=&gt;{const p=pct(t);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const sc=t.status==='Completada'?'badge-green':t.status==='En curso'?'badge-orange':t.status==='En progreso'?'badge-blue':'badge-gray';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let timeInfo='';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(t.started_at&amp;&amp;t.finished_at)timeInfo=`&lt;span style="color:var(--success);font-weight:600"&gt;⏱️ ${fmtDur(t.duration_minutes)}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>else if(t.started_at)timeInfo=`&lt;span style="color:var(--orange)"&gt;▶ En curso desde ${fmtTime(t.started_at)}&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return`&lt;div class="task-card-w"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;&lt;div style="font-weight:600;font-size:15px"&gt;${t.checklist_name||'Tarea'}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="font-size:12px;color:var(--g500);margin-top:2px"&gt;📍 ${t.zone} · 📅 ${t.date} ${t.time||''}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>${timeInfo?`&lt;div style="font-size:12px;margin-top:4px"&gt;${timeInfo}&lt;/div&gt;`:''}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="badge ${sc}"&gt;${t.status}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>${t.priority!=='Normal'?`&lt;span class="badge ${t.priority==='Urgente'?'badge-red':'badge-yellow'}"&gt;${t.priority}&lt;/span&gt;`:''}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="progress-bar"&gt;&lt;div class="progress-fill ${p===100?'green':t.status==='En curso'?'orange':''}" style="width:${p}%"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span style="font-size:12px;color:var(--g500)"&gt;${p}% · ${(t.items||[]).filter(i=&gt;i.done).length}/${(t.items||[]).length} tareas&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button class="btn ${t.status==='Completada'?'btn-secondary':'t.status==='En curso'?btn-orange:btn-primary'} btn-sm" onclick="viewTask('${t.id}')"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>${t.status==='Completada'?'Ver detalle':t.status==='En curso'?'▶ Continuar':'▶ Abrir tarea'}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;`;}).join('');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ PHOTOS ═══</p>
+<p class="p1">async function renderPhotos(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await loadAll();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const g=document.getElementById('photos-gallery');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>g.innerHTML=!Ps.length?'&lt;div class="empty" style="grid-column:1/-1"&gt;&lt;div class="empty-icon"&gt;📸&lt;/div&gt;No hay fotos aún&lt;/div&gt;':</p>
+<p class="p1"><span class="Apple-converted-space">    </span>Ps.map(p=&gt;{const w=Ws.find(x=&gt;x.id===p.worker_id),t=Ts.find(x=&gt;x.id===p.task_id);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return`&lt;div class="photo-card"&gt;&lt;img src="${p.url}" onclick="prevImg('${p.url}')"&gt;&lt;div class="photo-card-body"&gt;&lt;div style="font-size:13px;font-weight:500"&gt;${w?w.name:'—'}&lt;/div&gt;&lt;div style="font-size:11px;color:var(--g500)"&gt;${t?t.zone:''}&lt;/div&gt;&lt;div style="font-size:11px;color:var(--g400)"&gt;${new Date(p.created_at).toLocaleString('es-ES')}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;`;}).join('');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ═══ UTILS ═══</p>
+<p class="p1">function prevImg(src){const o=document.createElement('div');o.style='position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:300;display:flex;align-items:center;justify-content:center;cursor:pointer';o.innerHTML=`&lt;img src="${src}" style="max-width:90vw;max-height:90vh;border-radius:8px"&gt;`;o.onclick=()=&gt;o.remove();document.body.appendChild(o);}</p>
+<p class="p1">document.querySelectorAll('.modal-overlay').forEach(o=&gt;o.addEventListener('click',e=&gt;{if(e.target===o){cm(o.id);if(timerInterval&amp;&amp;o.id==='view-task-modal'){clearInterval(timerInterval);timerInterval=null;}}}));</p>
+<p class="p1">document.getElementById('cl-new-item').addEventListener('keydown',e=&gt;{if(e.key==='Enter')addCLItem();});</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
